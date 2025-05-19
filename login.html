@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Register</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+    <link rel="shortcut icon" href="./img/favicon-32x32.png" type="image/x-icon">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-image: url('./img/sapa4k.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            position: relative;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(5px);
+            z-index: -1;
+        }
+
+        .auth-card {
+            background: #f9f9f9;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .auth-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .auth-card h2 {
+            font-size: 2rem;
+            color: #d32f2f;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 20px;
+        }
+
+        .auth-card h2::after {
+            content: '★';
+            display: block;
+            color: #ffeb3b;
+            font-size: 1.5rem;
+            margin-top: 10px;
+        }
+
+        .toggle-buttons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .toggle-buttons button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: #d32f2f;
+            color: #ffeb3b;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .toggle-buttons button.active {
+            background: #b71c1c;
+        }
+
+        .toggle-buttons button:not(.active):hover {
+            background: #b71c1c;
+        }
+
+        .toggle-buttons button:first-child {
+            border-radius: 5px 0 0 5px;
+        }
+
+        .toggle-buttons button:last-child {
+            border-radius: 0 5px 5px 0;
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .auth-form label {
+            display: block;
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 5px;
+            text-align: left;
+        }
+
+        .auth-form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #d32f2f;
+            border-radius: 5px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .auth-form input:focus {
+            border-color: #b71c1c;
+            box-shadow: 0 0 5px rgba(211, 47, 47, 0.3);
+        }
+
+        .auth-form button {
+            width: 100%;
+            padding: 10px;
+            background: #d32f2f;
+            color: #ffeb3b;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .auth-form button:hover {
+            background: #b71c1c;
+            transform: scale(1.05);
+        }
+
+        .auth-form .error {
+            color: #d32f2f;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            display: none;
+            text-align: left;
+        }
+        a{
+            text-decoration: none;
+            color: yellow;
+        }
+        .auth-form .switch {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #333;
+        }
+
+        .auth-form .switch a {
+            color: #d32f2f;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .auth-form .switch a:hover {
+            color: #b71c1c;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .auth-card {
+                padding: 15px;
+                max-width: 90%;
+            }
+
+            .auth-card h2 {
+                font-size: 1.8rem;
+            }
+
+            .toggle-buttons button {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-card" data-aos="fade-up">
+        <h2 id="form-title">Login</h2>
+        <div class="toggle-buttons">
+            <button class="active" onclick="showForm('login')">Login</button>
+            <button onclick="showForm('register')">Register</button>
+        </div>
+        <form id="login-form" class="auth-form active" action="#" onsubmit="return validateLogin()" data-aos="fade-up" data-aos-delay="100">
+            <label for="login-email">Email</label>
+            <input type="email" id="login-email" placeholder="Enter your email" required>
+            <div class="error" id="login-email-error">Please enter a valid email</div>
+            <label for="login-password">Password</label>
+            <input type="password" id="login-password" placeholder="Enter your password" required>
+            <div class="error" id="login-password-error">Password cannot be empty</div>
+            <button type="submit"><a href="index.html">Login</a></button>
+            <div class="switch">
+                Don't have an account? <a href="#" onclick="showForm('register')">Sign up</a>
+            </div>
+        </form>
+        <form id="register-form" class="auth-form" action="#" onsubmit="return validateRegister()" data-aos="fade-up" data-aos-delay="100">
+            <label for="register-name">Full Name</label>
+            <input type="text" id="register-name" placeholder="Enter your full name" required>
+            <div class="error" id="register-name-error">Name cannot be empty</div>
+            <label for="register-email">Email</label>
+            <input type="email" id="register-email" placeholder="Enter your email" required>
+            <div class="error" id="register-email-error">Please enter a valid email</div>
+            <label for="register-password">Password</label>
+            <input type="password" id="register-password" placeholder="Enter your password" required>
+            <div class="error" id="register-password-error">Password must be at least 6 characters</div>
+            <label for="register-confirm">Confirm Password</label>
+            <input type="password" id="register-confirm" placeholder="Confirm your password" required>
+            <div class="error" id="register-confirm-error">Passwords do not match</div>
+            <button type="submit">Register</button>
+            <div class="switch">
+                Already have an account? <a href="#" onclick="showForm('login')">Sign in</a>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true,
+        });
+
+        function showForm(formType) {
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            const loginBtn = document.querySelector('.toggle-buttons button:first-child');
+            const registerBtn = document.querySelector('.toggle-buttons button:last-child');
+            const formTitle = document.getElementById('form-title');
+
+            if (formType === 'login') {
+                loginForm.classList.add('active');
+                registerForm.classList.remove('active');
+                loginBtn.classList.add('active');
+                registerBtn.classList.remove('active');
+                formTitle.textContent = 'Login';
+            } else {
+                loginForm.classList.remove('active');
+                registerForm.classList.add('active');
+                loginBtn.classList.remove('active');
+                registerBtn.classList.add('active');
+                formTitle.textContent = 'Register';
+            }
+        }
+
+        function validateLogin() {
+            let valid = true;
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const emailError = document.getElementById('login-email-error');
+            const passwordError = document.getElementById('login-password-error');
+
+            emailError.style.display = 'none';
+            passwordError.style.display = 'none';
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                emailError.style.display = 'block';
+                valid = false;
+            }
+
+            if (!password) {
+                passwordError.style.display = 'block';
+                valid = false;
+            }
+
+            if (valid) {
+                alert('Login submitted (demo)');
+            }
+
+            return valid;
+        }
+
+        function validateRegister() {
+            let valid = true;
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const confirm = document.getElementById('register-confirm').value;
+            const nameError = document.getElementById('register-name-error');
+            const emailError = document.getElementById('register-email-error');
+            const passwordError = document.getElementById('register-password-error');
+            const confirmError = document.getElementById('register-confirm-error');
+
+            nameError.style.display = 'none';
+            emailError.style.display = 'none';
+            passwordError.style.display = 'none';
+            confirmError.style.display = 'none';
+
+            if (!name) {
+                nameError.style.display = 'block';
+                valid = false;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                emailError.style.display = 'block';
+                valid = false;
+            }
+
+            if (password.length < 6) {
+                passwordError.style.display = 'block';
+                valid = false;
+            }
+
+            if (password !== confirm) {
+                confirmError.style.display = 'block';
+                valid = false;
+            }
+
+            if (valid) {
+                alert('Registration submitted (demo). Please integrate with a backend.');
+            }
+
+            return valid;
+        }
+    </script>
+</body>
+</html>

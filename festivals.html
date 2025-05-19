@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vietnam Festivals</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/fontMenu.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="shortcut icon" href="./img/favicon-32x32.png" type="image/x-icon">
+    <link rel="stylesheet" href="./css/chatbot.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-image: url('./img/sapa4k.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            position: relative;
+            color: #333;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(5px);
+            z-index: -2;
+        }
+
+        header {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #ffeb3b;
+            overflow: hidden;
+        }
+
+        header img.background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            filter: brightness(0.7);
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+
+        header h1 {
+            font-size: 5rem;
+            font-family: 'Great Vibes', cursive;
+            color: #ffeb3b;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.7);
+            animation: fadeIn 2s ease-in-out, glow 2s ease-in-out infinite alternate;
+            letter-spacing: 2px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes glow {
+            from { text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.7); }
+            to { text-shadow: 3px 3px 12px rgba(255, 235, 59, 0.9); }
+        }
+
+        .logo {
+            height: 70px;
+            width: auto;
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            z-index: 10;
+        }
+
+        nav {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            color: #ffeb3b;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            background: transparent;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        nav ul li {
+            position: relative;
+            margin: 0 5px;
+        }
+
+        nav ul li a {
+            color: #ffeb3b;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            padding: 8px 12px;
+            display: block;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        nav ul li a:hover {
+            color: #fff;
+            background: rgba(255, 235, 59, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        nav ul li ul {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: #d32f2f;
+            min-width: 150px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+        }
+
+        nav ul li:hover ul {
+            display: block;
+        }
+
+        nav ul li ul li {
+            margin: 0;
+            width: 100%;
+        }
+
+        nav ul li ul li a {
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            color: #ffeb3b;
+            text-transform: none;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        nav ul li ul li a:hover {
+            background: #b71c1c;
+            color: #fff;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+        }
+
+        .search-bar input {
+            padding: 8px;
+            font-size: 1rem;
+            border: 1px solid #ffeb3b;
+            border-radius: 5px 0 0 5px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+        }
+
+        .search-bar button {
+            padding: 8px 12px;
+            font-size: 1rem;
+            border: 1px solid #ffeb3b;
+            border-left: none;
+            border-radius: 0 5px 5px 0;
+            background-color: #d32f2f;
+            color: #ffeb3b;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            background-color: #b71c1c;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: #fff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        section {
+            margin-bottom: 40px;
+            padding: 20px 0;
+        }
+
+        section h2 {
+            font-size: 2.5rem;
+            color: #d32f2f;
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        section h2::after {
+            content: '★';
+            display: block;
+            color: #ffeb3b;
+            font-size: 1.5rem;
+            margin-top: 10px;
+        }
+
+        .intro-section {
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .intro-section p {
+            font-size: 1.2rem;
+            color: #555;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .festival-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .festival-card {
+            background: #f9f9f9;
+            border: 2px solid #ffeb3b;
+            border-radius: 0px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            min-height: 400px;
+        }
+
+        .festival-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .festival-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 0px 0px 0 0;
+        }
+
+        .festival-card-content {
+            padding: 15px;
+            background: #fefefe;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .festival-card-content h3 {
+            font-size: 1.5rem;
+            color: #d32f2f;
+            margin-bottom: 10px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .festival-card-content p {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 10px;
+            min-height: 60px;
+        }
+
+        .festival-card-content a {
+            display: inline-block;
+            margin-top: auto;
+            padding: 10px 20px;
+            background: #d32f2f;
+            color: #ffeb3b;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .festival-card-content a:hover {
+            background: #b71c1c;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .view-all {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .view-all a {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #d32f2f;
+            color: #ffeb3b;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .view-all a:hover {
+            background: #b71c1c;
+            transform: scale(1.05);
+        }
+
+        .traditional-festival-section {
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .traditional-festival-container {
+            width: 100%;
+            height: 450px;
+            overflow: hidden;
+        }
+
+        .traditional-festival-container .swiper-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .video-section {
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .video-container {
+            width: 100%;
+            height: 600px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f9f9f9;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-container video {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
+        .video-content {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .video-content h3 {
+            font-size: 1.8rem;
+            color: #d32f2f;
+            margin-bottom: 10px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .video-content p {
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: #ffeb3b;
+            background: rgba(211, 47, 47, 0.7);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            nav {
+                top: 15px;
+                right: 15px;
+            }
+
+            .logo {
+                left: 15px;
+                top: 15px;
+            }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                width: 200px;
+                position: absolute;
+                top: 100%;
+                right: 0;
+                background: #d32f2f;
+                padding: 10px 0;
+                border: 5px;
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            nav ul li {
+                margin: 5px 0;
+                width: 100%;
+                text-align: center;
+            }
+
+            nav ul li a {
+                padding: 10px;
+            }
+
+            .search-bar {
+                margin-bottom: 10px;
+            }
+
+            header h1 {
+                font-size: 2.5rem;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            section h2 {
+                font-size: 2rem;
+            }
+
+            .festival-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .traditional-festival-container {
+                height: 350px;
+            }
+
+            .festival-card {
+                width: 280px;
+            }
+
+            .festival-card img {
+                height: 200px;
+            }
+
+            .video-container {
+                height: 400px;
+            }
+
+            .video-container video {
+                height: 300px;
+            }
+
+            .video-content h3 {
+                font-size: 1.5rem;
+            }
+
+            .video-content p {
+                font-size: 1rem;
+            }
+
+            .intro-section p {
+                font-size: 1rem;
+            }
+
+            .email-subscribe form {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .email-subscribe input {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+
+        footer {
+            background: #fff;
+            color: #333;
+            text-align: center;
+            padding: 30px;
+            margin-top: 20px;
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        footer p {
+            font-size: 1.1rem;
+        }
+
+        .footer-logo {
+            margin: 10px 0;
+        }
+
+        .footer-logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .email-subscribe {
+            margin: 20px 0;
+        }
+
+        .email-subscribe p {
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        .email-subscribe form {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .email-subscribe input {
+            padding: 10px;
+            border: 1px solid #d32f2f;
+            border-radius: 5px;
+            font-size: 1rem;
+            width: 200px;
+        }
+
+        .email-subscribe button {
+            padding: 10px 20px;
+            background-color: #d32f2f;
+            color: #ffeb3b;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .email-subscribe button:hover {
+            background-color: #b71c1c;
+        }
+
+        .social-links.wrapper {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .social-links .icon {
+            margin: 0 20px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .social-links .icon a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .social-links .icon i {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+        }
+
+        .social-links .icon .tooltip {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            padding: 8px 16px;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 25px;
+            opacity: 0;
+            pointer-events: none;
+            box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2);
+            font-family: 'Poppins', sans-serif;
+            transition: 0.3s;
+        }
+
+        .social-links .iconérgtooltip:before {
+            position: absolute;
+            content: '';
+            height: 12px;
+            width: 12px;
+            left: 50%;
+            bottom: -6px;
+            transform: translateX(-50%) rotate(45deg);
+        }
+
+        .social-links .icon:hover .tooltip {
+            opacity: 1;
+            pointer-events: auto;
+            top: -60px;
+        }
+
+        .social-links .icon:hover i {
+            color: white;
+        }
+
+        .social-links .facebook .tooltip:before,
+        .social-links .facebook:hover i,
+        .social-links .facebook .tooltip {
+            background: #3b5999;
+        }
+
+        .social-links .instagram .tooltip:before,
+        .social-links .instagram:hover i,
+        .social-links .instagram .tooltip {
+            background: #e1306c;
+        }
+
+        .social-links .youtube .tooltip:before,
+        .social-links .youtube:hover i,
+        .social-links .youtube .tooltip {
+            background: #de463b;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="./img/festivalheader.png" alt="Vietnam Festivals Background" class="background">
+        <img src="./img/logo3.png" alt="Logo" class="logo">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="menu-toggle"><i class="fas fa-bars"></i></div>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search...">
+                    <button type="button"><i class="fas fa-search"></i></button>
+                </div>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li>
+                        <a href="explore.html">Explore</a>
+                        <ul>
+                            <li><a href="northern.html">Northern </a></li>
+                            <li><a href="central.html">Central </a></li>
+                            <li><a href="southern.html">Southern</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="festivals.html">Festivals</a></li>
+                    <li><a href="login.html">Login</a></li>
+                </ul>
+            </div>
+        </nav>
+        <h1>Vietnam Festivals</h1>
+    </header>
+
+    <div class="container">
+        <section class="intro-section" data-aos="fade-up">
+            <h2>Vietnam’s Vibrant Festivals</h2>
+            <p>
+                Vietnam’s festivals are a dazzling celebration of the country’s rich cultural heritage, blending ancient traditions with vibrant modern expressions. From the joyous Lunar New Year (Tet Nguyen Dan) to the enchanting Hoi An Lantern Festival, these events showcase Vietnam’s diverse ethnic groups, spiritual beliefs, and communal spirit. Whether it’s the rhythmic boat races of the Khmer Ok Om Bok or the imperial splendor of the Hue Festival, each celebration offers a unique glimpse into Vietnam’s soul, inviting visitors to join in the music, dance, and shared joy.
+            </p>
+        </section>
+
+        <section data-aos="fade-up">
+            <h2>Upcoming Festivals</h2>
+            <div class="festival-grid">
+                <div class="festival-card" data-aos="fade-up" data-aos-delay="100">
+                    <img src="./img/festivalimg/hungking.jpg" alt="Hùng Kings' Temple Festival">
+                    <div class="festival-card-content">
+                        <h3>Hùng Kings' Temple Festival</h3>
+                        <p>Time: Around May 7, 2025 (8th day of the 4th lunar month). Location: Hung Temple, Phu Tho. A celebration honoring Vietnam's founding kings with processions and cultural activities.</p>
+                        <a href="https://vietnam.travel/">Learn More</a>
+                    </div>
+                </div>
+                <div class="festival-card" data-aos="fade-up" data-aos-delay="200">
+                    <img src="./img/festivalimg/perfumePagoda.webp" alt="Perfume Pagoda Festival">
+                    <div class="festival-card-content">
+                        <h3>Perfume Pagoda Festival</h3>
+                        <p>Time: Ongoing through mid-2025. Location: Perfume Pagoda, Hanoi. A Buddhist pilgrimage with scenic boat rides and prayers for prosperity.</p>
+                        <a href="https://vietnam.travel/">Learn More</a>
+                    </div>
+                </div>
+                <div class="festival-card" data-aos="fade-up" data-aos-delay="300">
+                    <img src="./img/festivalimg/buckwheat.jpg" alt="Buckwheat Flower Festival">
+                    <div class="festival-card-content">
+                        <h3>Buckwheat Flower Festival</h3>
+                        <p>Time: October 20 - November 10, 2025. Location: Ha Giang. Celebrate the bloom of buckwheat flowers with ethnic performances and local cuisine.</p>
+                        <a href="https://vietnam.travel/">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="view-all" data-aos="fade-up" data-aos-delay="400">
+                <a href="./overview/festival_by_month.html">View All</a>
+            </div>
+        </section>
+
+        <section class="traditional-festival-section" data-aos="fade-up" data-aos-delay="400">
+            <h2>Traditional Festivals</h2>
+            <div class="traditional-festival-container swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="festival-card">
+                            <img src="./img/festivalimg/tetnguyendan.jpg" alt="Tet Nguyen Dan">
+                            <div class="festival-card-content">
+                                <h3>Tet Nguyen Dan</h3>
+                                <p>The Lunar New Year, a time for family reunions and vibrant celebrations across Vietnam.</p>
+                                <a href="https://vietnam.travel/">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="festival-card">
+                            <img src="./img/festivalimg/trungthu.jpg" alt="Mid-Autumn Festival">
+                            <div class="festival-card-content">
+                                <h3>Mid-Autumn Festival</h3>
+                                <p>A children's festival with lantern processions and mooncake traditions.</p>
+                                <a href="https://vietnam.travel/">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="festival-card">
+                            <img src="./img/festivalimg/okombok.jpg" alt="Ok Om Bok">
+                            <div class="festival-card-content">
+                                <h3>Ok Om Bok</h3>
+                                <p>A Khmer festival with boat races in the Mekong Delta.</p>
+                                <a href="https://vietnam.travel/">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="festival-card">
+                            <img src="./img/hue_festival.jpg" alt="Hue Festival">
+                            <div class="festival-card-content">
+                                <h3>Hue Festival</h3>
+                                <p>A biennial event showcasing Hue’s imperial culture and arts.</p>
+                                <a href="https://vietnam.travel/">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </section>
+
+        <section class="video-section" data-aos="fade-up" data-aos-delay="500">
+            <h2>Festival Highlights Video</h2>
+            <div class="video-container">
+                <video controls>
+                    <source src="./video/videoplayback.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="video-content">
+                    <h3>Vietnam Festival Showcase</h3>
+                    <p>This is Tet in VietNam</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-logo">
+            <img src="./img/logo3.png" alt="Explore Vietnam Logo">
+        </div>
+        <p>© 2025 Explore Vietnam. Proudly sharing Vietnamese culture with the world.</p>
+        <div class="email-subscribe">
+            <p>Receive new travel stories from Vietnam once a month in your inbox.</p>
+            <form>
+                <input type="email" placeholder="Enter your email" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+        <div class="social-links wrapper">
+            <div class="icon facebook">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <span class="tooltip">Facebook</span>
+            </div>
+            <div class="icon instagram">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <span class="tooltip">Instagram</span>
+            </div>
+            <div class="icon youtube">
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <span class="tooltip">YouTube</span>
+            </div>
+        </div>
+    </footer>
+    <div class="chatbot-button" onclick="toggleChatbot()">
+        <i class="fas fa-comment"></i>
+    </div>
+    <div class="chatbot-container" id="chatbotContainer">
+        <div class="chatbot-header">
+            <h3>Chat with Travel AI</h3>
+            <i class="fas fa-times chatbot-close" onclick="toggleChatbot()"></i>
+        </div>
+        <div class="chatbot-messages" id="chatbotMessages">
+            <div class="message bot">Hello! I'm here to help you explore Vietnam. Want to know today's weather, activity
+                suggestions, or explore beaches, festivals, specialties, or travel tips? Ask me anything!</div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="chatbotInput" placeholder="Type your question...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        var festivalSwiper = new Swiper('.traditional-festival-container', {
+            slidesPerView: 2,
+            spaceBetween: 20,
+            centeredSlides: false,
+            loop: false,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            breakpoints: {
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 15,
+                },
+                480: {
+                    slidesPerView: 1,
+                    spaceBetween: 10,
+                },
+            },
+        });
+
+        AOS.init({
+            duration: 1000,
+            once: true,
+        });
+
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navUl = document.querySelector('nav ul');
+        menuToggle.addEventListener('click', () => {
+            navUl.classList.toggle('active');
+        });
+    </script>
+    <script src="./js/chatbot.js"></script>
+</body>
+</html>

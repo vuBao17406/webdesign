@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Festivals by Month</title>
+    <link rel="stylesheet" href="../css/font.css">
+    <link rel="stylesheet" href="../css/fontMenu.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="shortcut icon" href="./img/favicon-32x32.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../img/favicon-32x32.png" type="image/x-icon">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-image: url('./img/sapa4k.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            position: relative;
+            color: #333;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(5px);
+            z-index: -2;
+        }
+
+        header {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #ffeb3b;
+            overflow: hidden;
+        }
+
+        header img.background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            filter: brightness(0.7);
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+
+        header h1 {
+            font-size: 5rem;
+            font-family: 'Great Vibes', cursive;
+            color: #ffeb3b;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.7);
+            animation: fadeIn 2s ease-in-out, glow 2s ease-in-out infinite alternate;
+            letter-spacing: 2px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes glow {
+            from { text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.7); }
+            to { text-shadow: 3px 3px 12px rgba(255, 235, 59, 0.9); }
+        }
+
+        .logo {
+            height: 70px;
+            width: auto;
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            z-index: 10;
+        }
+
+        nav {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            color: #ffeb3b;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            background: transparent;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        nav ul li {
+            position: relative;
+            margin: 0 5px;
+        }
+
+        nav ul li a {
+            color: #ffeb3b;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            padding: 8px 12px;
+            display: block;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        nav ul li a:hover {
+            color: #fff;
+            background: rgba(255, 235, 59, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        nav ul li ul {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: #d32f2f;
+            min-width: 150px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+        }
+
+        nav ul li:hover ul {
+            display: block;
+        }
+
+        nav ul li ul li {
+            margin: 0;
+            width: 100%;
+        }
+
+        nav ul li ul li a {
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            color: #ffeb3b;
+            text-transform: none;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        nav ul li ul li a:hover {
+            background: #b71c1c;
+            color: #fff;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+        }
+
+        .search-bar input {
+            padding: 8px;
+            font-size: 1rem;
+            border: 1px solid #ffeb3b;
+            border-radius: 5px 0 0 5px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+        }
+
+        .search-bar button {
+            padding: 8px 12px;
+            font-size: 1rem;
+            border: 1px solid #ffeb3b;
+            border-left: none;
+            border-radius: 0 5px 5px 0;
+            background-color: #d32f2f;
+            color: #ffeb3b;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            background-color: #b71c1c;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: #fff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        section {
+            margin-bottom: 40px;
+            padding: 20px 0;
+        }
+
+        section h2 {
+            font-size: 2.5rem;
+            color: #d32f2f;
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        section h2::after {
+            content: '★';
+            display: block;
+            color: #ffeb3b;
+            font-size: 1.5rem;
+            margin-top: 10px;
+        }
+
+        section h3 {
+            font-size: 2rem;
+            color: #d32f2f;
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .festival-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .region-item {
+            background: #fefefe;
+            border: 2px solid #ffeb3b;
+            border-radius: 0;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            border: 2px solid #ffeb3b;
+            display: flex;
+            flex-direction: column;
+            min-height: 400px;
+        }
+
+        .region-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .region-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: opacity 0.3s ease;
+        }
+
+        .region-item img:hover {
+            opacity: 0.9;
+        }
+
+        .region-item-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .region-item-content h3 {
+            font-size: 1.8rem;
+            color: #d32f2f;
+            margin-bottom: 15px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .region-item-content p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .region-item-content a {
+            display: inline-block;
+            margin-top: auto;
+            padding: 10px 20px;
+            background: #d32f2f;
+            color: #ffeb3b;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s ease, transform 0.3s ease;
+            text-align: center;
+        }
+
+        .region-item-content a:hover {
+            background: #b71c1c;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .month-nav-container {
+            position: relative;
+            max-width: 100%;
+            margin-bottom: 30px;
+        }
+
+        .month-nav {
+            display: flex;
+            justify-content: flex-start;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 10px 0;
+            background: #d32f2f;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            scroll-behavior: smooth;
+        }
+
+        .month-nav::-webkit-scrollbar {
+            height: 12px;
+        }
+
+        .month-nav::-webkit-scrollbar-thumb {
+            background-color: #ffeb3b;
+            border-radius: 6px;
+            border: 2px solid #d32f2f;
+        }
+
+        .month-nav::-webkit-scrollbar-track {
+            background: #d32f2f;
+            border-radius: 6px;
+        }
+
+        .month-nav a {
+            color: #ffeb3b;
+            text-decoration: none;
+            font-size: 1.3rem;
+            font-weight: 500;
+            padding: 10px 15px;
+            margin: 0 3px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            min-width: 120px;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .month-nav a i {
+            margin-right: 5px;
+            font-size: 1.2rem;
+        }
+
+        .month-nav a:hover,
+        .month-nav a.active {
+            background: #ffeb3b;
+            color: #d32f2f;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #ffeb3b;
+            color: #d32f2f;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            transition: background 0.3s ease;
+        }
+
+        .nav-arrow:hover {
+            background: #fff;
+        }
+
+        .nav-arrow.prev {
+            left: -20px;
+        }
+
+        .nav-arrow.next {
+            right: -20px;
+        }
+
+        .month-content {
+            display: none;
+        }
+
+        .month-content.active {
+            display: block;
+        }
+
+        .festival-card {
+            background: #fefefe;
+            border: 2px solid #ffeb3b;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            border: 2px solid #ffeb3b;
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            min-height: 400px;
+        }
+
+        .festival-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .festival-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: opacity 0.3s ease;
+        }
+
+        .festival-card img:hover {
+            opacity: 0.9;
+        }
+
+        .festival-card-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .festival-card-content h3 {
+            font-size: 1.8rem;
+            color: #d32f2f;
+            margin-bottom: 15px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .festival-card-content p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .festival-card-content a {
+            display: inline-block;
+            margin-top: auto;
+            padding: 12px 25px;
+            background: #d32f2f;
+            color: #ffeb3b;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .festival-card-content a:hover {
+            background: #b71c1c;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-to-festivals {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .back-to-festivals a {
+            display: inline-block;
+            padding: 12px 25px;
+            background: #d32f2f;
+            color: #ffeb3b;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .back-to-festivals a:hover {
+            background: #b71c1c;
+            transform: scale(1.05);
+        }
+
+        footer {
+            background: #fff;
+            color: #333;
+            text-align: center;
+            padding: 30px;
+            margin-top: 20px;
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        footer p {
+            font-size: 1.1rem;
+        }
+
+        .footer-logo {
+            margin: 10px 0;
+        }
+
+        .footer-logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .email-subscribe {
+            margin: 20px 0;
+        }
+
+        .email-subscribe p {
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        .email-subscribe form {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .email-subscribe input {
+            padding: 10px;
+            border: 1px solid #d32f2f;
+            border-radius: 5px;
+            font-size: 1rem;
+            width: 200px;
+        }
+
+        .email-subscribe button {
+            padding: 10px 20px;
+            background-color: #d32f2f;
+            color: #ffeb3b;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .email-subscribe button:hover {
+            background-color: #b71c1c;
+        }
+
+        .social-links.wrapper {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .social-links .icon {
+            margin: 0 20px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .social-links .icon a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .social-links .icon i {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+        }
+
+        .social-links .icon .tooltip {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            padding: 8px 16px;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 25px;
+            opacity: 0;
+            pointer-events: none;
+            box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2);
+            font-family: 'Poppins', sans-serif;
+            transition: 0.3s;
+        }
+
+        .social-links .icon .tooltip:before {
+            position: absolute;
+            content: '';
+            height: 12px;
+            width: 12px;
+            left: 50%;
+            bottom: -6px;
+            transform: translateX(-50%) rotate(45deg);
+        }
+
+        .social-links .icon:hover .tooltip {
+            opacity: 1;
+            pointer-events: auto;
+            top: -60px;
+        }
+
+        .social-links .icon:hover i {
+            color: white;
+        }
+
+        .social-links .facebook .tooltip:before,
+        .social-links .facebook:hover i,
+        .social-links .facebook .tooltip {
+            background: #3b5999;
+        }
+
+        .social-links .instagram .tooltip:before,
+        .social-links .instagram:hover i,
+        .social-links .instagram .tooltip {
+            background: #e1306c;
+        }
+
+        .social-links .youtube .tooltip:before,
+        .social-links .youtube:hover i,
+        .social-links .youtube .tooltip {
+            background: #de463b;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            nav {
+                top: 15px;
+                right: 15px;
+            }
+
+            .logo {
+                left: 15px;
+                top: 15px;
+            }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                width: 200px;
+                position: absolute;
+                top: 100%;
+                right: 0;
+                background: #d32f2f;
+                padding: 10px 0;
+                border-radius: 5px;
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            nav ul li {
+                margin: 5px 0;
+                width: 100%;
+                text-align: center;
+            }
+
+            nav ul li a {
+                padding: 10px;
+            }
+
+            .search-bar {
+                margin-bottom: 10px;
+            }
+
+            header h1 {
+                font-size: 2.5rem;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            section h2 {
+                font-size: 2rem;
+            }
+
+            .festival-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .month-nav {
+                flex-direction: row;
+                overflow-x: auto;
+                padding: 5px 0;
+            }
+
+            .month-nav a {
+                font-size: 1rem;
+                padding: 8px 12px;
+                margin: 0 2px;
+                min-width: 90px;
+            }
+
+            .month-nav a i {
+                font-size: 1rem;
+            }
+
+            .nav-arrow.prev {
+                left: 0px;
+            }
+
+            .nav-arrow.next {
+                right: 0px;
+            }
+
+            .region-item, .festival-card {
+                min-height: 350px;
+            }
+
+            .email-subscribe form {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .email-subscribe input {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .region-item, .festival-card {
+                min-height: 300px;
+            }
+
+            .region-item img, .festival-card img {
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="../img/festivalheader.png" alt="Festivals Background" class="background">
+        <img src="../img/logo3.png" alt="Explore Vietnam Logo" class="logo">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="menu-toggle"><i class="fas fa-bars"></i></div>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search...">
+                    <button type="button"><i class="fas fa-search"></i></button>
+                </div>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li>
+                        <a href="#">Explore</a>
+                        <ul>
+                            <li><a href="../northern.html">Northern </a></li>
+                            <li><a href="../central.html">Central </a></li>
+                            <li><a href="../southern.html">Southern </a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../festivals.html">Festivals</a></li>
+                    <li><a href="../login.html">Login</a></li>
+                </ul>
+            </div>
+        </nav>
+        <h1>Festivals by Month</h1>
+    </header>
+
+    <div class="container">
+        <section class="featured-festivals" data-aos="fade-up">
+            <h2>Featured Festivals</h2>
+            <div class="festival-grid">
+                <div class="region-item" data-aos="fade-up" data-aos-delay="100">
+                    <img src="../img/lunar_new_year.jpg" alt="Tet Nguyen Dan">
+                    <div class="region-item-content">
+                        <h3>Tet Nguyen Dan</h3>
+                        <p>Time: January 29 - February 1, 2025. A nationwide celebration of Lunar New Year with family reunions and fireworks.</p>
+                        <a href="#january">Explore</a>
+                    </div>
+                </div>
+                <div class="region-item" data-aos="fade-up" data-aos-delay="200">
+                    <img src="../img/midautumnfestival.webp" alt="Mid-Autumn Festival">
+                    <div class="region-item-content">
+                        <h3>Mid-Autumn Festival</h3>
+                        <p>Time: October 6, 2025. A children’s festival with lantern processions and mooncakes across Vietnam.</p>
+                        <a href="#october">Explore</a>
+                    </div>
+                </div>
+                <div class="region-item" data-aos="fade-up" data-aos-delay="300">
+                    <img src="../img/giotohungvuogn1.jpg" alt="Hung Kings' Temple Festival">
+                    <div class="region-item-content">
+                        <h3>Hung Kings' Temple Festival</h3>
+                        <p>Time: May 7, 2025. Honors Vietnam's founding kings with processions at Hung Temple, Phu Tho.</p>
+                        <a href="#may">Explore</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="month-nav-container" data-aos="fade-down">
+            <button class="nav-arrow prev"><i class="fas fa-chevron-left"></i></button>
+            <div class="month-nav">
+                <a href="#" class="month-link" data-month="january"><i class="fas fa-snowflake"></i> January</a>
+                <a href="#" class="month-link" data-month="february"><i class="fas fa-heart"></i> February</a>
+                <a href="#" class="month-link" data-month="march"><i class="fas fa-seedling"></i> March</a>
+                <a href="#" class="month-link" data-month="april"><i class="fas fa-umbrella"></i> April</a>
+                <a href="#" class="month-link" data-month="may"><i class="fas fa-sun"></i> May</a>
+                <a href="#" class="month-link" data-month="june"><i class="fas fa-cloud-sun"></i> June</a>
+                <a href="#" class="month-link" data-month="july"><i class="fas fa-thermometer-half"></i> July</a>
+                <a href="#" class="month-link" data-month="august"><i class="fas fa-cloud-rain"></i> August</a>
+                <a href="#" class="month-link" data-month="september"><i class="fas fa-leaf"></i> September</a>
+                <a href="#" class="month-link" data-month="october"><i class="fas fa-pumpkin"></i> October</a>
+                <a href="#" class="month-link" data-month="november"><i class="fas fa-tree"></i> November</a>
+                <a href="#" class="month-link" data-month="december"><i class="fas fa-gift"></i> December</a>
+            </div>
+            <button class="nav-arrow next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+
+        <div id="january" class="month-content">
+            <div class="festival-card" data-aos="fade-up" data-aos-delay="100">
+                <img src="./img/perfumepagoda.jpg" alt="Perfume Pagoda Festival">
+                <div class="festival-card-content">
+                    <h3>Perfume Pagoda Festival</h3>
+                    <p>Time: January 6 - March 31, 2025. Location: Perfume Pagoda, Hanoi. A major Buddhist pilgrimage with boat rides and prayers.</p>
+                    <a href="https://vietnam.travel/">Learn More</a>
+                </div>
+            </div>
+            <div class="festival-card" data-aos="fade-up" data-aos-delay="200">
+                <img src="./img/giongsocson.jpg" alt="Giong Festival (Soc Son)">
+                <div class="festival-card-content">
+                    <h3>Giong Festival (Soc Son)</h3>
+                    <p>Time: February 3-5, 2025. Location: Soc Temple, Hanoi. Honors the legendary hero Saint Giong with processions.</p>
+                    <a href="https://vietnam.travel/">Learn More</a>
+                </div>
+            </div>
+            <div class="festival-card" data-aos="fade-up" data-aos-delay="300">
+                <img src="./img/limfestival.jpg" alt="Lim Festival">
+                <div class="festival-card-content">
+                    <h3>Lim Festival</h3>
+                    <p>Time: January 12-14, 2025. Location: Lim Village, Bac Ninh. A folk music and quan ho singing festival.</p>
+                    <a href="https://vietnam.travel/">Learn More</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="february" class="month-content">
+            <div class="festival-card" data-aos="fade-up" data-aos-delay="100">
+                <img src="./img/tetnguyendan.jpg" alt="Tet Nguyen Dan">
+                <div class="festival-card-content">
+                    <h3>Tet Nguyen Dan</h3>
+                    <p>Time: January 29 - February 1, 2025. Location: Nationwide. Vietnam's Lunar New Year with family reunions and fireworks.</p>
+                    <a href="https://vietnam.travel/">Learn More</a>
+                </div>
+            </div>
+            <div class="festival-card" data-aos="fade-up" data-aos-delay="200">
+                <img src="./img/giongphudong.jpg" alt="Giong Festival (Phu Dong)">
+                <div class="festival-card-content">
+                    <h3>Giong Festival (Phu Dong)</h3>
+                    <p>Time: May 24-25, 2025. Location: Phu Dong Temple, Hanoi. Celebrates Saint Giong's victory with traditional rituals.</p>
+                    <a href="https://vietnam.travel/">Learn More</a>
+                </div>
+            </div>
+            <div class="festival-card" data-aos="fade-up" data-aos-delay="300">
+                <img src="./img/springflower.jpg" alt="Spring Flower Festival">
+                <div class="festival-card-content">
+                    <h3>Spring Flower Festival</h3>
+                    <p>Time: February 10-15, 2025. Location: Da Lat. Showcases floral displays and cultural performances.</p>
+                    <a href="https://vietnam.travel/">Learn More</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="march" class="month-content">
+            <div class="festival-card" data-aos="fade-up" data-aos-delay="100">
+                <img src="./img/perfumepagoda.jpg" alt="Perfume Pagoda Festival">
+                <div class="festival-card-content">
+                    <h3>Perfume Pagoda Festival</h3>
+                    <p>Time: January 6 - March 31, 2025. Location: Perfume Pagoda, Hanoi. A major Buddhist pilgrimage with boat rides and prayers.</p>
+                    <a href="https://vietnam.travel/">Learn More</a>
+                </div>
+            </div>
+            <div class="festival-card" data-aos="fade-up" data-aos-delay="200">
+                <img src="./img/huongpagoda.jpg" alt="Huong Pagoda Festival">
+                <div class="festival-card-content">
+                    <h3>Huong Pagoda Festival</h3>
+                    <p>Time: March 15-20, 2025. Location: Hanoi. A continuation of the pilgrimage with cultural events.</p>
+                    <a href="https://vietnam.travel/">Learn More</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="april" class="month-content">
+            <div class="festival-card" data-aos="fade-up" data-aos-delay="100">
+                <img src="./img/hungkings.jpg" alt="Hung Kings' Temple Festival">
+                <div class="festival-card-content">
+                    <h3>Hung Kings' Temple Festival</h3>
+                    <p>Time: April 7, 2025 (10th day of the 3rd lunar month). Location: Hung Temple, Phu Tho. Honors Vietnam's founding kings.</p>
+                    <a href="https://vietnam.travel/">Learn More</a>
+                </div>
+            </div>
+            <div class="festival-card" data-aos="fade-up" data-aos-delay="200">
+                <img src="./img/buddhasbirthday.jpg" alt="Buddha's Birthday">
+                <div class="festival-card-content">
+                    <h3>Buddha's Birthday</h3>
+                    <p>Time: May 5, 2025 (9th day of the 4th lunar month). Location: Nationwide. Celebrates Buddha's birth with temple decorations.</p>
+                    <a href="https://vietnam.travel/">Learn More</a>
+                </div>
+            </div>
+            <div class="festival-card" data-aos="fade-up" data-aos-delay="300">
+                <img src="./img/vietnamheritage.jpg" alt="Vietnam Heritage Festival">
+                <div class="festival-card-content">
+                    <h3>Vietnam Heritage Festival</h3>
+                    <p>Time: April 20-25, 2025. Location: Hanoi. Showcases Vietnam's cultural heritage with exhibitions and performances.</p>
+                    <a href="https://vietnam.travel/">Learn More</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="may" class="month-content">
+            <div class="festival-card" data-aos="fade-up" data-aos-delay="100">
+                <img src="./img/hungkings.jpg" alt="Hung Kings' Temple Festival">
+                <div class="festival-card-content">
+                    <h3>Hung Kings' Temple Festival</h3>
+                    <p>Time: Around May 7, 2025 (8th day of the 4th lunar month). Location: Hung Temple, Phu Tho. A celebration with processions.</p>
+                    <a href="https://vietnam.travel/">Learn More</a>
+                </div>
+            </div>
+            <div class="festival-card" data-aos="fade-up" data-aos-delay="200">
+                <img src="./img/buddhasbirthday.jpg" alt="Buddha's Birthday">
+                <div class="festival-card-content">
+                    <h3>Buddha's Birthday</h3>
+                    <p>Time: May 5, 2025 (9th day of the 4th lunar month). Location: Nationwide. Features prayers and temple offerings.</p>
+                    <a href="https://vietnam.travel/">Learn More</a>
+                </div>
+            </div>
+            <div class="festival-card" data-aos="fade-up" data-aos-delay="300">
+                <img src="./img/halongcarnival.jpg" alt="Ha Long Carnival">
+                <div class="festival-card-content">
+                    <h3>Ha Long Carnival</h3>
+                    <p>Time: May 28-30, 2025. Location: Ha Long Bay. A vibrant event with parades, music, and fireworks.</p>
+                    <a href="https://vietnam.travel/">Learn More</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="june" class="month-content">
+            <div class="festival-card" data-aos="fade-up" data-aos-delay="100">
+                <img src="./img/doangofestival.jpg" alt="Doan Ngo Festival">
+                <div class="festival-card-content">
+                    <h3>Doan Ngo Festival</h3>
+                    <p>Time: June 5, 2025 (5th day of the 5th lunar month). Location: Nationwide. Celebrates pest prevention with traditional foods.</p>
+                    <a href="https://vietnam.travel/">Learn More</a>
+                </div>
+            </div>
+            <div class="festival-card" data-aos="fade-up" data-aos-delay="200">
+                <img src="./img/huefestival.jpg" alt="Hue Festival">
+                <div class="festival-card-content">
+                    <h3>Hue Festival</h3>
+                    <p>Time: June 10-15, 2025. Location: Hue. A biennial event showcasing imperial culture and arts.</p>
+                    <a href="https://vietnam.travel/">Learn More</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="july" class="month-content">
+            <div class="festival-card" data-aos="fade-up" data-aos-delay="100">
+                <img src="./img/nofestivals.jpg" alt="No Major Festivals">
+                <div class="festival-card-content">
+                    <h3>No Major Festivals</h3>
+                    <p>Check back for updates on festivals in July!</p>
+                    <a href="https://vietnam.travel/">Learn More</a>
+                </div>
+            </div>
+            <div class="festival-card" data-aos="fade-up" data-aos-delay="200">
+                <img src="./img/danangfireworks.jpg" alt="Da Nang International Fireworks Festival">
+                <div class="festival-card-content">
+                    <h3>Da Nang International Fireworks Festival</h3>
+                    <p>Time: July 4-6, 2025. Location: Da Nang. A spectacular fireworks display over the Han River.</p>
+                    <a href="https://vietnam.travel/">Learn More</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="august" class="month-content">
+            <div class="festival-card" data-aos="fade-up" data-aos-delay="100">
+                <img src="./img/wanderingsouls.jpg" alt="Wandering Souls Day">
+                <div class="festival-card-content">
+                    <h3>Wandering Souls Day (Ghost Festival)</h3>
+                    <p>Time: August 18, 2025 (15th day of the 7th lunar month). Location: Nationwide. Honors ancestors with offerings and lanterns.</p>
+                    <a href="https://vietnam.travel/">Learn More</a>
+                </div>
+            </div>
+            <div class="festival-card" data-aos="fade-up" data-aos-delay="200">
+                <img src="./img/vietnamsea.jpg" alt="Vietnam Sea Festival">
+                <div class="festival-card-content">
+                    <h3>Vietnam Sea Festival</h3>
+                    <p>Time: August 10-12, 2025. Location: Vung Tau. Celebrates maritime culture with boat races and seafood.</p>
+                    <a href="https://vietnam.travel/">Learn More</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="september" class="month-content">
+            <div class="festival-card" data-aos="fade-up" data-aos-delay="100">
+                <img src="./img/midautumn.jpg" alt="Mid-Autumn Festival">
+                <div class="festival-card-content">
+                    <h3>Mid-Autumn Festival</h3>
+                    <p>Time: October 6, 2025 (15th day of the 8th lunar month). Location: Nationwide. Features lantern processions and mooncakes.</p>
+                    <a href="https://vietnam.travel/">Learn More</a>
+                </div>
+            </div>
+            <div class="festival-card" data-aos="fade-up" data-aos-delay="200">
+                <img src="./img/phuquocfood.jpg" alt="Phu Quoc Food Festival">
+                <div class="festival-card-content">
+                    <h3>Phu Quoc Food Festival</h3>
+                    <p>Time: September 15-20, 2025. Location: Phu Quoc. Showcases local seafood and culinary arts.</p>
+                    <a href="https://vietnam.travel/">Learn More</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="october" class="month-content">
+            <div class="festival-card" data-aos="fade-up" data-aos-delay="100">
+                <img src="./img/midautumn.jpg" alt="Mid-Autumn Festival">
+                <div class="festival-card-content">
+                    <h3>Mid-Autumn Festival</h3>
+                    <p>Time: October 6, 2025 (15th day of the 8th lunar month). Location: Nationwide. Celebrates with children and lanterns.</p>
+                    <a href="https://vietnam.travel/">Learn More</a>
+                </div>
+            </div>
+            <div class="festival-card" data-aos="fade-up" data-aos-delay="200">
+                <img src="./img/buckwheatflower.jpg" alt="Buckwheat Flower Festival">
+                <div class="festival-card-content">
+                    <h3>Buckwheat Flower Festival</h3>
+                    <p>Time: October 20 - November 10, 2025. Location: Ha Giang. Features ethnic performances and buckwheat displays.</p>
+                    <a href="https://vietnam.travel/">Learn More</a>
+                </div>
+            </div>
+            <div class="festival-card" data-aos="fade-up" data-aos-delay="300">
+                <img src="./img/motorcyclefestival.jpg" alt="Vietnam Motorcycle Festival">
+                <div class="festival-card-content">
+                    <h3>Vietnam Motorcycle Festival</h3>
+                    <p>Time: October 10-12, 2025. Location: Hanoi. A gathering of motorcycle enthusiasts with races and exhibitions.</p>
+                    <a href="https://vietnam.travel/">Learn More</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="november" class="month-content">
+            <div class="festival-card" data-aos="fade-up" data-aos-delay="100">
+                <img src="./img/buckwheatflower.jpg" alt="Buckwheat Flower Festival">
+                <div class="festival-card-content">
+                    <h3>Buckwheat Flower Festival</h3>
+                    <p>Time: October 20 - November 10, 2025. Location: Ha Giang. Celebrates with music and local cuisine.</p>
+                    <a href="https://vietnam.travel/">Learn More</a>
+                </div>
+            </div>
+            <div class="festival-card" data-aos="fade-up" data-aos-delay="200">
+                <img src="./img/okombok.jpg" alt="Ok Om Bok Festival">
+                <div class="festival-card-content">
+                    <h3>Ok Om Bok Festival</h3>
+                    <p>Time: November 19-20, 2025 (14th-15th day of the 10th lunar month). Location: Mekong Delta. A Khmer festival with boat races.</p>
+                    <a href="https://vietnam.travel/">Learn More</a>
+                </div>
+            </div>
+            <div class="festival-card" data-aos="fade-up" data-aos-delay="300">
+                <img src="./img/saigonriver.jpg" alt="Saigon River Festival">
+                <div class="festival-card-content">
+                    <h3>Saigon River Festival</h3>
+                    <p>Time: November 5-7, 2025. Location: Ho Chi Minh City. Features boat parades and cultural performances.</p>
+                    <a href="https://vietnam.travel/">Learn More</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="december" class="month-content">
+            <div class="festival-card" data-aos="fade-up" data-aos-delay="100">
+                <img src="./img/christmas.jpg" alt="Christmas Celebrations">
+                <div class="festival-card-content">
+                    <h3>Christmas Celebrations</h3>
+                    <p>Time: December 24-25, 2025. Location: Nationwide, especially in cities. Features decorations, lights, and festive events.</p>
+                    <a href="https://vietnam.travel/">Learn More</a>
+                </div>
+            </div>
+            <div class="festival-card" data-aos="fade-up" data-aos-delay="200">
+                <img src="./img/newyearseve.jpg" alt="New Year Eve Festival">
+                <div class="festival-card-content">
+                    <h3>New Year Eve Festival</h3>
+                    <p>Time: December 31, 2025. Location: Major cities. Welcomes 2026 with fireworks and celebrations.</p>
+                    <a href="https://vietnam.travel/">Learn More</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="back-to-festivals" data-aos="fade-up">
+            <a href="../festivals.html">Back to Festivals</a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-logo">
+            <img src="../img/logo3.png" alt="Explore Vietnam Logo">
+        </div>
+        <p>© 2025 Explore Vietnam. Proudly sharing Vietnamese culture with the world.</p>
+        <div class="email-subscribe">
+            <p>Receive new travel stories from Vietnam once a month in your inbox.</p>
+            <form>
+                <input type="email" placeholder="Enter your email" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+        <div class="social-links wrapper">
+            <div class="icon facebook">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <span class="tooltip">Facebook</span>
+            </div>
+            <div class="icon instagram">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <span class="tooltip">Instagram</span>
+            </div>
+            <div class="icon youtube">
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <span class="tooltip">YouTube</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        window.onload = () => {
+            AOS.init({ duration: 1000, once: true });
+
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navUl = document.querySelector('nav ul');
+            if (menuToggle && navUl) {
+                menuToggle.addEventListener('click', () => {
+                    navUl.classList.toggle('active');
+                });
+            } else {
+                console.error('Menu toggle or nav ul not found in the DOM');
+            }
+
+            const monthLinks = document.querySelectorAll('.month-link');
+            const monthContents = document.querySelectorAll('.month-content');
+
+            monthLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const month = link.getAttribute('data-month');
+
+                    monthLinks.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+
+                    monthContents.forEach(content => content.classList.remove('active'));
+                    document.getElementById(month).classList.add('active');
+
+                    AOS.refresh();
+                });
+            });
+
+            const monthNav = document.querySelector('.month-nav');
+            const prevButton = document.querySelector('.nav-arrow.prev');
+            const nextButton = document.querySelector('.nav-arrow.next');
+
+            if (prevButton && nextButton && monthNav) {
+                prevButton.addEventListener('click', () => {
+                    monthNav.scrollBy({ left: -150, behavior: 'smooth' });
+                });
+
+                nextButton.addEventListener('click', () => {
+                    monthNav.scrollBy({ left: 150, behavior: 'smooth' });
+                });
+            } else {
+                console.error('Navigation arrows or month-nav not found in the DOM');
+            }
+
+            const currentMonth = new Date().getMonth() + 1;
+            const defaultMonthLink = document.querySelector(`.month-link[data-month="${currentMonth === 5 ? 'may' : 'january'}"]`);
+            if (defaultMonthLink) {
+                defaultMonthLink.click();
+            }
+        };
+    </script>
+</body>
+</html>
